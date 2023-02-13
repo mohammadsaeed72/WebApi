@@ -6,7 +6,7 @@ using SampleWebApi._1.Entities;
 
 namespace SampleWebApi._2.Database.EntitiesConfig
 {
-    public class ItemConfig : IEntityTypeConfiguration<Item>
+    public partial class ItemConfig : IEntityTypeConfiguration<Item>
     {
         public void Configure(EntityTypeBuilder<Item> builder)
         {
@@ -16,6 +16,7 @@ namespace SampleWebApi._2.Database.EntitiesConfig
             builder.Property(a => a.Code).HasMaxLength(20);
             builder.HasIndex(a=>a.Code).IsUnique();
 
+            builder.HasQueryFilter(a => a.IsActive == true);
         }
     }
 }

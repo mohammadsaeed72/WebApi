@@ -9,13 +9,13 @@ using System.Text;
 
 namespace SampleWebApi._3.Services
 {
-    public class AuthenticationService : IAuthenticationService
+    public class MyAuthenticationService : IMyAuthenticationService
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
 
-        public AuthenticationService(UserManager<AppUser> userManager,
+        public MyAuthenticationService(UserManager<AppUser> userManager,
             RoleManager<IdentityRole> roleManager, IConfiguration configuration)
         {
             _userManager = userManager;

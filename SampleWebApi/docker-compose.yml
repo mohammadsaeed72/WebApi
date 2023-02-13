@@ -10,6 +10,7 @@ services:
           - "8081:443"
         depends_on:
           - db
+          - cache
 
     db:
         image: "mcr.microsoft.com/mssql/server:2019-latest"
@@ -19,4 +20,18 @@ services:
         environment:
             SA_PASSWORD: "P@swod!2#"
             ACCEPT_EULA: "Y"
+
+    cache:
+        image: "redis:latest"
+        restart: "always"
+        command: "redis-server --save 20 1 --loglevel warning --requirepass p@sword!2#"
+        ports:
+            - "6379:6379"
+
+    rabbitmq:
+        image: "rabbitmq:3.11.8-management"
+        container_name: 'rabbitmq'
+        ports:
+            - 5672:5672
+            - 15672:15672
             

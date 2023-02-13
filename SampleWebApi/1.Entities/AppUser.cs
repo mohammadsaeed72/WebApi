@@ -6,5 +6,6 @@ public class AppUser:IdentityUser, IEntity
 {
     public string Name { get; set; }
     public string LastName { get; set; }
-    public List<Address> LstAddress { get; set; }
+    public string PostalCode { get; set; }
+    public virtual List<Address> LstAddress { get; set; }
 }

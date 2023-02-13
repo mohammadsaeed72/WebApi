@@ -15,9 +15,9 @@ namespace SampleWebApi.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-        private readonly IAuthenticationService _authenticationService;
+        private readonly IMyAuthenticationService _authenticationService;
 
-        public AuthController(IAuthenticationService authenticationService)
+        public AuthController(IMyAuthenticationService authenticationService)
         {
             _authenticationService = authenticationService;
         }

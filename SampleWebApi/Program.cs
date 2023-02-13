@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SampleWebApi._1.Entities;
 using SampleWebApi._2.Database;
+using SampleWebApi._3.Services;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -16,7 +17,8 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddScoped<IAuthenticationService, AuthenticationService>();
+builder.Services.AddScoped<IMyAuthenticationService, MyAuthenticationService>();
+builder.Services.AddScoped<IItemService, ItemService>();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
@@ -46,6 +48,18 @@ builder.Services.AddAuthentication(options =>
         ValidateAudience = false,
         IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["JWT:Secret"]))
     };
+});
+
+builder.Services.AddCap(capConf =>
+{
+    capConf.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr"));
+    capConf.UseRabbitMQ(conf =>
+    {
+        conf.HostName = "localhost";
+        conf.Port = 5672;
+        //conf.UserName = "root";
+        //conf.Password="password";
+    });
 });
 
 

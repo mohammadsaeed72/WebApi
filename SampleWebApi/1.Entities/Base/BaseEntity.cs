@@ -4,8 +4,8 @@ namespace SampleWebApi._1.Entities.Base
 {
     public class Entity
     {
-        public DateTime InsertedDate { get; set; }
-        public DateTime ModifiedDate { get; set; }
+        public DateTime InsertedDate { get; set; } = DateTime.Now;
+        public DateTime? ModifiedDate { get; set; }
     }
     public class BaseEntity<TKey>: Entity
     {
