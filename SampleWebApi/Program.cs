@@ -5,6 +5,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using SampleWebApi._1.Entities;
 using SampleWebApi._2.Database;
+using SampleWebApi._2.Database.Repositories;
 using SampleWebApi._3.Services;
 using System.Text;
 
@@ -20,6 +21,13 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IMyAuthenticationService, MyAuthenticationService>();
 builder.Services.AddScoped<IItemService, ItemService>();
 builder.Services.AddScoped<IBasketService, BasketService>();
+
+
+
+builder.Services.AddScoped<IItemRepository, ItemRepository>();
+
+
+
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
