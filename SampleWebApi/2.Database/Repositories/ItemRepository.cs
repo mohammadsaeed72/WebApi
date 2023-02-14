@@ -33,6 +33,20 @@ namespace SampleWebApi._2.Database.Repositories
 
             return lstItem;
         }
+        public async Task<List<Item>> GetOrderedByDateAsync(int page,int pageSize)
+        {
+            var lstItem = await TableSet
+                .Include(a => a.ItemGroupId)
+                .Include(a => a.LstDiscounts)
+                .Include(a => a.LstItemTransactions)
+                .Include(a => a.LstFeatures).ThenInclude(a => a.Feature)
+                .Include(a => a.LstItemPrice)
+                .OrderByDescending(a => a.InsertedDate)
+                .Skip((page-1)*pageSize).Take(pageSize)
+                .ToListAsync();
+
+            return lstItem;
+        }
 
         public async Task<Item> AddAsync(Item item)
         {

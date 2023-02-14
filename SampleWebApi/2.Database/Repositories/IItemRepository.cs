@@ -9,6 +9,7 @@ namespace SampleWebApi._2.Database.Repositories
         Task<Item> GetByIdAsync(string id);
         Task<List<SimilarItemViewModel>> GetItemListByPriceRangeAsync(decimal minPrice, decimal maxPrice, int count);
         Task<List<Item>> GetOrderedByDateAsync(int top);
+        Task<List<Item>> GetOrderedByDateAsync(int page, int pageSize);
         Task<Item> UpdateAsync(Item item);
     }
 }

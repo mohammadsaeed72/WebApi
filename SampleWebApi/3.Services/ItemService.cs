@@ -1,5 +1,6 @@
 ﻿using SampleWebApi._2.Database.Repositories;
 using SampleWebApi._4.ViewModels.Items;
+using SampleWebApi._4.ViewModels.MappingConfig;
 
 namespace SampleWebApi._3.Services
 {
@@ -33,6 +34,31 @@ namespace SampleWebApi._3.Services
             }
 
             return result;
+        }
+
+        public async Task<List<GetItemViewModel>> GetItemsAsync(int page=1,int pageSize=10)
+        {
+            List<GetItemViewModel> returnVal = new();
+
+            var lstItems = await _itemRepository.GetOrderedByDateAsync(page,pageSize);
+
+            foreach (var item in lstItems)
+            {
+                returnVal.Add(item.GetViewModel(DateTime.Now));
+            }
+
+            return returnVal;
+        }
+
+        public async Task SoftDeleteAsync(string itemId)
+        {
+
+            var item = await _itemRepository.GetByIdAsync(itemId);
+            if(item is not null)
+                item.IsActive= false;
+
+            await _itemRepository.UpdateAsync(item);
+            return;
         }
     }
 }

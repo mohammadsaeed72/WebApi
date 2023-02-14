@@ -1,11 +1,6 @@
 ﻿using SampleWebApi._1.Entities;
 using SampleWebApi._2.Database.Repositories;
 using SampleWebApi._4.ViewModels.Items;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SampleWebApi_Test.Moq
 {

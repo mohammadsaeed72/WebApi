@@ -1,19 +1,21 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Tokens;
 using SampleWebApi._1.Entities;
 using SampleWebApi._3.Services;
 using SampleWebApi._4.ViewModels.Users;
+using SampleWebApi.Controllers.Base;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 
 namespace SampleWebApi.Controllers
 {
-    [Route("api/[controller]")]
-    [ApiController]
-    public class AuthController : ControllerBase
+
+
+    public class AuthController : MyBaseController
     {
         private readonly IMyAuthenticationService _authenticationService;
 
@@ -24,6 +26,7 @@ namespace SampleWebApi.Controllers
 
         [HttpPost]
         [Route("login")]
+        [AllowAnonymous]
         public async Task<IActionResult> Login([FromBody] LoginViewModel model)
         {
 
@@ -37,6 +40,7 @@ namespace SampleWebApi.Controllers
 
         [HttpPost]
         [Route("register")]
+        [AllowAnonymous]
         public async Task<IActionResult> Register([FromBody] RegisterViewModel model)
         {
             var result = await _authenticationService.RegisterAsync(model);

@@ -1,18 +1,8 @@
-using SampleWebApi._3.Services;
+﻿using SampleWebApi._3.Services;
 using SampleWebApi_Test.Moq;
-using System.Collections.Immutable;
 
 namespace SampleWebApi_Test
 {
-    public class UnitTest1
-    {
-        [Fact]
-        public void Test1()
-        {
-
-        }
-    }
-
     public class ItemServiceTest
     {
         ItemRepositoryMoq _itemRepository;
@@ -67,7 +57,7 @@ namespace SampleWebApi_Test
             Assert.True(result.Any(a=>a.Id== _itemRepository._itemId + "5")==false);
 
         }
-
+        [Fact]
         public async void GetSimilarItem_NullItemId_MustBeNull()
         {
             //Arrange

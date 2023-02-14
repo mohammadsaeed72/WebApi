@@ -19,6 +19,7 @@ builder.Services.AddSwaggerGen();
 
 builder.Services.AddScoped<IMyAuthenticationService, MyAuthenticationService>();
 builder.Services.AddScoped<IItemService, ItemService>();
+builder.Services.AddScoped<IBasketService, BasketService>();
 
 builder.Services.AddDbContext<AppDbContext>(opt =>
 {
@@ -55,11 +56,16 @@ builder.Services.AddCap(capConf =>
     capConf.UseSqlServer(builder.Configuration.GetConnectionString("ConnStr"));
     capConf.UseRabbitMQ(conf =>
     {
-        conf.HostName = "localhost";
+        conf.HostName = "rabbitmq";
         conf.Port = 5672;
         //conf.UserName = "root";
         //conf.Password="password";
     });
+});
+
+builder.Services.AddStackExchangeRedisCache(op =>
+{
+    op.Configuration = "cache:6379,password=p@sword!2#";
 });
 
 
