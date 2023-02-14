@@ -1,7 +1,6 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SampleWebApi._3.Services;
-using SampleWebApi._4.ViewModels.Items;
 using SampleWebApi.Controllers.Base;
 
 namespace SampleWebApi.Controllers
@@ -31,6 +30,7 @@ namespace SampleWebApi.Controllers
         }
 
         [HttpDelete("SoftDeleteItem")]
+        //[Authorize(Roles ="Admin")]
         public async Task<IActionResult> SoftDelete(string itemId)
         {
              await _itemService.SoftDeleteAsync(itemId);

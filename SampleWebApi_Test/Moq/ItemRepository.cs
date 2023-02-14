@@ -93,5 +93,10 @@ namespace SampleWebApi_Test.Moq
 
             return result;
         }
+
+        public async Task<List<Item>> GetOrderedByDateAsync(int page, int pageSize)
+        {
+            return _items.Take(pageSize).ToList();
+        }
     }
 }
