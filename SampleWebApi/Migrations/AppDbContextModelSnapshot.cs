@@ -185,7 +185,7 @@ namespace SampleWebApi.Migrations
                     b.Property<DateTime>("InsertedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -270,6 +270,10 @@ namespace SampleWebApi.Migrations
                     b.Property<bool>("PhoneNumberConfirmed")
                         .HasColumnType("bit");
 
+                    b.Property<string>("PostalCode")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("SecurityStamp")
                         .HasColumnType("nvarchar(max)");
 
@@ -305,7 +309,7 @@ namespace SampleWebApi.Migrations
                     b.Property<DateTime>("InsertedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -315,6 +319,96 @@ namespace SampleWebApi.Migrations
                     b.HasKey("Id");
 
                     b.ToTable("Feature");
+                });
+
+            modelBuilder.Entity("SampleWebApi._1.Entities.Invoice", b =>
+                {
+                    b.Property<string>("Id")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("AppUserId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime>("DeliverDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InvoiceDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InvoiceType")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("TotalDiscount")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<decimal>("TotalPrice")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("AppUserId")
+                        .IsUnique();
+
+                    b.ToTable("Invoice");
+                });
+
+            modelBuilder.Entity("SampleWebApi._1.Entities.InvoiceLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("Amount")
+                        .HasColumnType("int");
+
+                    b.Property<decimal>("DiscountPerUnit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("InvoiceId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<int>("InvoiceType")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ItemId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<decimal>("PricePerUnit")
+                        .HasColumnType("decimal(18,2)");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceId");
+
+                    b.HasIndex("ItemId");
+
+                    b.ToTable("InvoiceLine");
                 });
 
             modelBuilder.Entity("SampleWebApi._1.Entities.Item", b =>
@@ -335,14 +429,14 @@ namespace SampleWebApi.Migrations
                     b.Property<DateTime>("InsertedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("IsActive")
-                        .HasColumnType("int");
+                    b.Property<bool>("IsActive")
+                        .HasColumnType("bit");
 
                     b.Property<int?>("ItemGroupId")
                         .IsRequired()
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -386,7 +480,7 @@ namespace SampleWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -421,7 +515,7 @@ namespace SampleWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Value")
@@ -452,7 +546,7 @@ namespace SampleWebApi.Migrations
                     b.Property<DateTime>("InsertedDate")
                         .HasColumnType("datetime2");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
@@ -482,7 +576,7 @@ namespace SampleWebApi.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<DateTime>("ModifiedDate")
+                    b.Property<DateTime?>("ModifiedDate")
                         .HasColumnType("datetime2");
 
                     b.Property<decimal>("Price")
@@ -496,6 +590,42 @@ namespace SampleWebApi.Migrations
                     b.HasIndex("ItemId");
 
                     b.ToTable("ItemPrice");
+                });
+
+            modelBuilder.Entity("SampleWebApi._1.Entities.ItemTransaction", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<DateTime>("InsertedDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("InvoiceLineId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("ItemId")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<string>("ItemId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.Property<DateTime?>("ModifiedDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("InvoiceLineId");
+
+                    b.HasIndex("ItemId")
+                        .IsUnique();
+
+                    b.HasIndex("ItemId1");
+
+                    b.ToTable("ItemTransaction");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -560,6 +690,44 @@ namespace SampleWebApi.Migrations
                     b.Navigation("AppUser");
                 });
 
+            modelBuilder.Entity("SampleWebApi._1.Entities.Invoice", b =>
+                {
+                    b.HasOne("SampleWebApi._1.Entities.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SampleWebApi._1.Entities.AppUser", "User")
+                        .WithOne()
+                        .HasForeignKey("SampleWebApi._1.Entities.Invoice", "AppUserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Address");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("SampleWebApi._1.Entities.InvoiceLine", b =>
+                {
+                    b.HasOne("SampleWebApi._1.Entities.Invoice", "Invoice")
+                        .WithMany("LstLines")
+                        .HasForeignKey("InvoiceId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SampleWebApi._1.Entities.Item", "Item")
+                        .WithMany()
+                        .HasForeignKey("ItemId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Invoice");
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("SampleWebApi._1.Entities.Item", b =>
                 {
                     b.HasOne("SampleWebApi._1.Entities.ItemGroup", "Group")
@@ -612,9 +780,37 @@ namespace SampleWebApi.Migrations
                     b.Navigation("Item");
                 });
 
+            modelBuilder.Entity("SampleWebApi._1.Entities.ItemTransaction", b =>
+                {
+                    b.HasOne("SampleWebApi._1.Entities.InvoiceLine", "InvoiceLine")
+                        .WithMany()
+                        .HasForeignKey("InvoiceLineId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("SampleWebApi._1.Entities.Item", "Item")
+                        .WithOne()
+                        .HasForeignKey("SampleWebApi._1.Entities.ItemTransaction", "ItemId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("SampleWebApi._1.Entities.Item", null)
+                        .WithMany("LstItemTransactions")
+                        .HasForeignKey("ItemId1");
+
+                    b.Navigation("InvoiceLine");
+
+                    b.Navigation("Item");
+                });
+
             modelBuilder.Entity("SampleWebApi._1.Entities.AppUser", b =>
                 {
                     b.Navigation("LstAddress");
+                });
+
+            modelBuilder.Entity("SampleWebApi._1.Entities.Invoice", b =>
+                {
+                    b.Navigation("LstLines");
                 });
 
             modelBuilder.Entity("SampleWebApi._1.Entities.Item", b =>
@@ -624,6 +820,8 @@ namespace SampleWebApi.Migrations
                     b.Navigation("LstFeatures");
 
                     b.Navigation("LstItemPrice");
+
+                    b.Navigation("LstItemTransactions");
                 });
 
             modelBuilder.Entity("SampleWebApi._1.Entities.ItemGroup", b =>

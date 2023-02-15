@@ -16,11 +16,11 @@ namespace SampleWebApi.Controllers.Base
         {
             UserId = GetUserId(User);
         }
-        private string GetUserId(ClaimsPrincipal principal)
+        private string GetUserId(ClaimsPrincipal? principal)
         {
             if (principal == null)
             {
-                throw new ArgumentNullException(nameof(principal));
+                return null;
             }
             var claim = principal.FindFirst(ClaimTypes.NameIdentifier);
             return claim != null ? claim.Value : null;

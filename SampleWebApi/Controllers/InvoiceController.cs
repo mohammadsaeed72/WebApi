@@ -8,17 +8,22 @@ namespace SampleWebApi.Controllers
 {
     public class InvoiceController : MyBaseController
     {
-        public InvoiceController()
-        {
+        private readonly ILogger<InvoiceController> _logger;
 
+        public InvoiceController(ILogger<InvoiceController> logger)
+        {
+            _logger = logger;
         }
 
         [NonAction]
         [CapSubscribe("Invoice.Build.Basket")]
-        public async Task ReceivedBasketInfo(BasketInfoViewModel basket, [FromCap] CapHeader header)
+        public async Task ReceivedBasketInfo(string basket, [FromCap] CapHeader header)
         {
 
             var userId = header["userId"];
+
+            _logger.LogError($"{userId} in Queue");
+            Console.WriteLine("Invoice.Build.Basket");
             // process to create invoice
 
             // 1- check items amount

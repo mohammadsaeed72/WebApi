@@ -6,7 +6,7 @@ namespace SampleWebApi._1.Entities
     public class Invoice : BaseEntity<string>, IEntity
     {
         [ForeignKey(nameof(User))]
-        public int AppUserId { get; set; }
+        public string AppUserId { get; set; }
         public AppUser User { get; set; }
 
         [ForeignKey(nameof(Address))]

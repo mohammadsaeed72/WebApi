@@ -19,4 +19,12 @@ namespace SampleWebApi._2.Database.EntitiesConfig
             builder.HasQueryFilter(a => a.IsActive == true);
         }
     }
+
+    public partial class InvoiceConfig : IEntityTypeConfiguration<Invoice>
+    {
+        public void Configure(EntityTypeBuilder<Invoice> builder)
+        {
+            builder.HasOne(a => a.User).WithOne().OnDelete(DeleteBehavior.NoAction);
+        }
+    }
 }

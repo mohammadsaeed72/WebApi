@@ -67,30 +67,37 @@ namespace SampleWebApi.Controllers
 
 
         [HttpGet("BuildInvoice")]
+        [AllowAnonymous]
         public async Task<IActionResult> BuildInvoiceFromBasket([FromServices] ICapPublisher capBus)
         {
 
-            var result = await _basketService.GetBasketAsync(UserId);
-            if (result.IsSuccess)
-            {
-                if(result.Message is not null && result.Message.Length>3)
-                {
-                    return StatusCode(StatusCodes.Status400BadRequest,result);
-                }
-                else
-                {
-                    var header = new Dictionary<string, string>();
-                    header["userId"] = UserId;
+            //var result = await _basketService.GetBasketAsync(UserId);
+            //if (result.IsSuccess)
+            //{
+            //    if(result.Message is not null && result.Message.Length>3)
+            //    {
+            //        return StatusCode(StatusCodes.Status400BadRequest,result);
+            //    }
+            //    else
+            //    {
+            //        var header = new Dictionary<string, string>();
+            //        header["userId"] = UserId;
 
-                    capBus.Publish("Invoice.Build.Basket", result.Data,header);
+            //        capBus.Publish("Invoice.Build.Basket", result.Data,header);
 
-                    await _basketService.ClearBasketAsync(UserId);
+            //        await _basketService.ClearBasketAsync(UserId);
 
-                    return Ok(result);
-                }
-                
-            }
-            return StatusCode(StatusCodes.Status500InternalServerError, result);
+            //        return Ok(result);
+            //    }
+
+            //}
+            //return StatusCode(StatusCodes.Status500InternalServerError, result);
+
+            var header = new Dictionary<string, string>();
+            header["userId"] = "123123123";
+
+            capBus.Publish("Invoice.Build.Basket", "TestMessage", header);
+            return Ok();
         }
     }
 }

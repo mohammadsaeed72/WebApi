@@ -7,6 +7,7 @@ using SampleWebApi._1.Entities;
 using SampleWebApi._2.Database;
 using SampleWebApi._2.Database.Repositories;
 using SampleWebApi._3.Services;
+using SampleWebApi.Middlewares;
 using System.Text;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -79,6 +80,7 @@ builder.Services.AddStackExchangeRedisCache(op =>
 
 var app = builder.Build();
 
+app.UsetryCatchExceptionMiddleware();
 // Configure the HTTP request pipeline.
 using (var scope = app.Services.GetService<IServiceScopeFactory>().CreateScope())
 {
